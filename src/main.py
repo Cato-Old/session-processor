@@ -1,9 +1,11 @@
 from src.app import Application
+from src.loader import PSVLoader
 from src.view import SessionProcessorView
 
 
 def build_application() -> Application:
-    view = SessionProcessorView()
+    loader = PSVLoader()
+    view = SessionProcessorView(loader=loader)
     return Application(view=view)
 
 
