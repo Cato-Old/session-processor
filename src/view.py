@@ -5,5 +5,5 @@ class SessionProcessorView:
     def __init__(self, loader: Loader) -> None:
         pass
 
-    def process(self) -> None:
+    def process(self, path: str) -> None:
         raise NotImplementedError
