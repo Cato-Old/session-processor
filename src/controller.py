@@ -1,0 +1,2 @@
+class SessionProcessorController:
+    pass
