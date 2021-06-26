@@ -1,2 +1,10 @@
+from typing import Generator
+
+from src.domain import Statement
+
+
 class SessionProcessorController:
-    pass
+    def process(
+            self, input_statements: Generator[Statement, None, None],
+    ) -> None:
+        raise NotImplementedError
