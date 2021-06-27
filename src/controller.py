@@ -1,5 +1,6 @@
 from typing import Generator
 
+from src.creator import SessionCreator
 from src.domain import Statement
 from src.grouper import StatementGrouper
 from src.sorter import StatementSorter
@@ -10,6 +11,7 @@ class SessionProcessorController:
             self,
             grouper: StatementGrouper,
             sorter: StatementSorter,
+            creator: SessionCreator,
     ) -> None:
         self._grouper = grouper
         self._sorter = sorter

@@ -10,6 +10,7 @@ from pytest import fixture
 from pytest import raises
 
 from src.controller import SessionProcessorController
+from src.creator import SessionCreator
 from src.domain import Statement
 from src.grouper import StatementGrouper
 from src.sorter import StatementSorter
@@ -63,10 +64,19 @@ class TestSessionProcessorController:
         return sorter
 
     @fixture
+    def creator(self) -> SessionCreator:
+        return mock(SessionCreator)
+
+    @fixture
     def controller(
-            self, grouper: StatementGrouper, sorter: StatementSorter,
+            self,
+            grouper: StatementGrouper,
+            sorter: StatementSorter,
+            creator: SessionCreator,
     ) -> SessionProcessorController:
-        return SessionProcessorController(grouper=grouper, sorter=sorter)
+        return SessionProcessorController(
+            grouper=grouper, sorter=sorter, creator=creator,
+        )
 
     def test_raises_on_process(
             self,
