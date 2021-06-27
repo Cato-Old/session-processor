@@ -1,10 +1,12 @@
 from typing import Generator
 
+from mockito import mock
 from pytest import fixture
 from pytest import raises
 
 from src.controller import SessionProcessorController
 from src.domain import Statement
+from src.grouper import StatementGrouper
 
 from tests.unit.test_loader import StatementFactory
 
@@ -16,8 +18,14 @@ class TestSessionProcessorController:
         return (s for s in statements)
 
     @fixture
-    def controller(self) -> SessionProcessorController:
-        return SessionProcessorController()
+    def grouper(self) -> StatementGrouper:
+        return mock()
+
+    @fixture
+    def controller(
+            self, grouper: StatementGrouper,
+    ) -> SessionProcessorController:
+        return SessionProcessorController(grouper=grouper)
 
     def test_raises_on_process(
             self,
