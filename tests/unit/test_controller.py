@@ -4,17 +4,17 @@ from typing import List
 
 from factory.fuzzy import FuzzyInteger
 from mockito import mock
-from mockito import verify
 from mockito import when
 from pytest import fixture
-from pytest import raises
 
 from src.controller import SessionProcessorController
 from src.creator import SessionCreator
+from src.domain import Session
 from src.domain import Statement
 from src.grouper import StatementGrouper
 from src.sorter import StatementSorter
 
+from tests.unit.test_creator import SessionFactory
 from tests.unit.test_loader import StatementFactory
 
 
@@ -44,6 +44,10 @@ class TestSessionProcessorController:
         return statements
 
     @fixture
+    def sessions(self) -> List[Session]:
+        return SessionFactory.build_batch(10)
+
+    @fixture
     def grouper(
             self,
             input_statements: Generator[Statement, None, None],
@@ -64,8 +68,14 @@ class TestSessionProcessorController:
         return sorter
 
     @fixture
-    def creator(self) -> SessionCreator:
-        return mock(SessionCreator)
+    def creator(
+            self,
+            sorted_statements: Dict[int, List[Statement]],
+            sessions: List[Session],
+    ) -> SessionCreator:
+        creator = mock(SessionCreator)
+        when(creator).create(sorted_statements).thenReturn(s for s in sessions)
+        return creator
 
     @fixture
     def controller(
@@ -83,9 +93,9 @@ class TestSessionProcessorController:
             controller: SessionProcessorController,
             grouper: StatementGrouper,
             sorter: StatementSorter,
+            creator: SessionCreator,
             input_statements: Generator[Statement, None, None],
+            sessions: List[Session],
     ) -> None:
-        with raises(NotImplementedError):
-            controller.process(input_statements)
-        verify(grouper).group(...)
-        verify(sorter).sort(...)
+        actual = controller.process(input_statements)
+        assert list(actual) == sessions
