@@ -6,9 +6,10 @@ from src.grouper import StatementGrouper
 
 class SessionProcessorController:
     def __init__(self, grouper: StatementGrouper) -> None:
-        pass
+        self._grouper = grouper
 
     def process(
             self, input_statements: Generator[Statement, None, None],
     ) -> None:
+        self._grouper.group(input_statements)
         raise NotImplementedError
