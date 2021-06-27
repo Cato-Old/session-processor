@@ -12,9 +12,11 @@ class SessionProcessorController:
             sorter: StatementSorter,
     ) -> None:
         self._grouper = grouper
+        self._sorter = sorter
 
     def process(
             self, input_statements: Generator[Statement, None, None],
     ) -> None:
-        self._grouper.group(input_statements)
+        grouped = self._grouper.group(input_statements)
+        self._sorter.sort(grouped)
         raise NotImplementedError

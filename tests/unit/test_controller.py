@@ -32,6 +32,17 @@ class TestSessionProcessorController:
         }
 
     @fixture
+    def sorted_statements(self) -> Dict[int, List[Statement]]:
+        home_numbers = (FuzzyInteger(0).fuzz() for _ in range(10))
+        statements = {
+            no: StatementFactory.build_batch(3, home_no=no)
+            for no in home_numbers
+        }
+        for statement in statements:
+            statements[statement].sort(key=lambda s: s.start_time)
+        return statements
+
+    @fixture
     def grouper(
             self,
             input_statements: Generator[Statement, None, None],
@@ -42,8 +53,14 @@ class TestSessionProcessorController:
         return grouper
 
     @fixture
-    def sorter(self) -> StatementSorter:
-        return mock(StatementSorter)
+    def sorter(
+            self,
+            grouped_statements: Dict[int, List[Statement]],
+            sorted_statements: Dict[int, List[Statement]],
+    ) -> StatementSorter:
+        sorter = mock(StatementSorter)
+        when(sorter).sort(grouped_statements).thenReturn(sorted_statements)
+        return sorter
 
     @fixture
     def controller(
@@ -55,8 +72,10 @@ class TestSessionProcessorController:
             self,
             controller: SessionProcessorController,
             grouper: StatementGrouper,
+            sorter: StatementSorter,
             input_statements: Generator[Statement, None, None],
     ) -> None:
         with raises(NotImplementedError):
             controller.process(input_statements)
         verify(grouper).group(...)
+        verify(sorter).sort(...)
