@@ -1,12 +1,29 @@
+import datetime
 from typing import Dict, List
 
+from factory import Factory, LazyAttribute
 from factory.fuzzy import FuzzyInteger
+from factory.fuzzy import FuzzyNaiveDateTime
+from factory.fuzzy import FuzzyText
 from pytest import fixture
 from pytest import raises
 
 from src.creator import SessionCreator
+from src.domain import Session
 from src.domain import Statement
 from tests.unit.test_loader import StatementFactory
+
+
+class SessionFactory(Factory):
+    class Meta:
+        model = Session
+
+    home_no = FuzzyInteger(0)
+    channel = FuzzyInteger(0)
+    start_time = FuzzyNaiveDateTime(datetime.datetime(2021, 1, 1))
+    activity = FuzzyText()
+    end_time = LazyAttribute(lambda o: FuzzyNaiveDateTime(o.start_time).fuzz())
+    duration = LazyAttribute(lambda o: o.end_time-o.start_time)
 
 
 class TestSessionCreator:
