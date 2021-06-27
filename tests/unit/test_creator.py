@@ -6,7 +6,6 @@ from factory.fuzzy import FuzzyInteger
 from factory.fuzzy import FuzzyNaiveDateTime
 from factory.fuzzy import FuzzyText
 from pytest import fixture
-from pytest import raises
 
 from src.creator import SessionCreator
 from src.domain import Session
@@ -42,10 +41,41 @@ class TestSessionCreator:
             statements[statement].sort(key=lambda s: s.start_time)
         return statements
 
+    @fixture
+    def expected(
+            self, sorted_statements: Dict[int, List[Statement]],
+    ) -> List[Session]:
+        sessions = []
+        for _, statements in sorted_statements.items():
+            for start, end in zip(statements, [*statements[1:], None]):
+                end_time = (
+                        end.start_time - datetime.timedelta(seconds=1)
+                        if end else datetime.datetime(
+                            year=start.start_time.year,
+                            month=start.start_time.month,
+                            day=start.start_time.day,
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+                )
+                duration = end_time - start.start_time
+                session = Session(
+                    home_no=start.home_no,
+                    channel=start.channel,
+                    start_time=start.start_time,
+                    activity=start.activity,
+                    end_time=end_time,
+                    duration=duration,
+                )
+                sessions.append(session)
+        return sessions
+
     def test_raise_on_creation(
             self,
             creator: SessionCreator,
             sorted_statements: Dict[int, List[Statement]],
+            expected: List[Session],
     ) -> None:
-        with raises(NotImplementedError):
-            creator.create(sorted_statements)
+        actual = creator.create(sorted_statements)
+        assert list(actual) == expected
