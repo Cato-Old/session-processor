@@ -1,0 +1,2 @@
+class SessionCreator:
+    pass
