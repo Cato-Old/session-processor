@@ -12,6 +12,7 @@ from pytest import raises
 from src.controller import SessionProcessorController
 from src.domain import Statement
 from src.grouper import StatementGrouper
+from src.sorter import StatementSorter
 
 from tests.unit.test_loader import StatementFactory
 
@@ -41,10 +42,14 @@ class TestSessionProcessorController:
         return grouper
 
     @fixture
+    def sorter(self) -> StatementSorter:
+        return mock(StatementSorter)
+
+    @fixture
     def controller(
-            self, grouper: StatementGrouper,
+            self, grouper: StatementGrouper, sorter: StatementSorter,
     ) -> SessionProcessorController:
-        return SessionProcessorController(grouper=grouper)
+        return SessionProcessorController(grouper=grouper, sorter=sorter)
 
     def test_raises_on_process(
             self,
