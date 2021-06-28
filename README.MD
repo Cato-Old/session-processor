@@ -8,4 +8,5 @@
 
 3. Running tests in v:
 > python install -r requirements_dev.txt
+
 > pytest .
