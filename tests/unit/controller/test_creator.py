@@ -8,7 +8,7 @@ from factory.fuzzy import FuzzyText
 from pytest import fixture
 
 from src.controller.creator import SessionCreator
-from src.domain import Session
+from src.domain import Session, Statement
 from src.domain import StatementsByHomeNo
 
 from tests.unit.view.test_loader import StatementFactory
@@ -58,7 +58,7 @@ class TestSessionCreator:
                             second=59,
                         )
                 )
-                duration = end_time - start.start_time
+                duration = self._calculate_duration(end_time, start)
                 session = Session(
                     home_no=start.home_no,
                     channel=start.channel,
@@ -69,6 +69,12 @@ class TestSessionCreator:
                 )
                 sessions.append(session)
         return sessions
+
+    @staticmethod
+    def _calculate_duration(
+            end_time: datetime.datetime, start: Statement,
+    ) -> datetime.timedelta:
+        return end_time - start.start_time + datetime.timedelta(seconds=1)
 
     def test_creates_sessions(
             self,

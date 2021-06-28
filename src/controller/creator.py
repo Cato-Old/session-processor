@@ -1,10 +1,11 @@
 from datetime import datetime
 from datetime import time
 from datetime import timedelta
-from typing import Generator
 
-from src.domain import StatementsByHomeNo, SessionGenerator
 from src.domain import Session
+from src.domain import SessionGenerator
+from src.domain import Statement
+from src.domain import StatementsByHomeNo
 
 
 class SessionCreator:
@@ -27,7 +28,7 @@ class SessionCreator:
                         second=self.END_OF_DAY.second,
                     )
                 )
-                duration = end_time-start.start_time
+                duration = self._calculate_duration(end_time, start)
                 yield Session(
                     home_no=start.home_no,
                     channel=start.channel,
@@ -36,3 +37,7 @@ class SessionCreator:
                     end_time=end_time,
                     duration=duration,
                 )
+
+    @staticmethod
+    def _calculate_duration(end_time: datetime, start: Statement) -> timedelta:
+        return end_time - start.start_time + timedelta(seconds=1)
