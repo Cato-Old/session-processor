@@ -42,7 +42,7 @@ class TestPSVDumper:
                 'Starttime': session.start_time.strftime('%Y%m%d%H%M%S'),
                 'Activity': session.activity,
                 'Endtime': session.end_time.strftime('%Y%m%d%H%M%S'),
-                'Duration': session.duration.total_seconds(),
+                'Duration': int(session.duration.total_seconds()),
             } for session in session_values
         ]
         with NamedTemporaryFile(mode='w', newline='', delete=False) as ntf:

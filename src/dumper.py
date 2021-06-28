@@ -40,5 +40,5 @@ class PSVDumper(Dumper):
                 'Starttime': session.start_time.strftime('%Y%m%d%H%M%S'),
                 'Activity': session.activity,
                 'Endtime': session.end_time.strftime('%Y%m%d%H%M%S'),
-                'Duration': session.duration.total_seconds(),
+                'Duration': int(session.duration.total_seconds()),
         }
