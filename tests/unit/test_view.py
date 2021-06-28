@@ -6,6 +6,7 @@ from pytest import raises
 from src.controller.controller import SessionProcessorController
 from src.domain import SessionGenerator
 from src.domain import StatementGenerator
+from src.dumper import Dumper
 from src.loader import Loader, PSVLoader
 from src.view import SessionProcessorView
 from tests.unit.controller.test_creator import SessionFactory
@@ -43,10 +44,19 @@ class TestSessionProcessorView:
         return controller
 
     @fixture
+    def dumper(self) -> Dumper:
+        return mock(Dumper)
+
+    @fixture
     def view(
-            self, loader: Loader, controller: SessionProcessorController,
+            self,
+            loader: Loader,
+            controller: SessionProcessorController,
+            dumper: Dumper
     ) -> SessionProcessorView:
-        return SessionProcessorView(loader=loader, controller=controller)
+        return SessionProcessorView(
+            loader=loader, controller=controller, dumper=dumper,
+        )
 
     def test_raises_on_process(
             self,

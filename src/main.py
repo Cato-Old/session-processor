@@ -3,6 +3,7 @@ from src.controller.controller import SessionProcessorController
 from src.controller.creator import SessionCreator
 from src.controller.grouper import StatementGrouper
 from src.controller.sorter import StatementSorter
+from src.dumper import PSVDumper
 from src.loader import PSVLoader
 from src.view import SessionProcessorView
 
@@ -10,7 +11,10 @@ from src.view import SessionProcessorView
 def build_application() -> Application:
     loader = PSVLoader()
     controller = build_controller()
-    view = SessionProcessorView(loader=loader, controller=controller)
+    dumper = PSVDumper()
+    view = SessionProcessorView(
+        loader=loader, controller=controller, dumper=dumper,
+    )
     return Application(view=view)
 
 
