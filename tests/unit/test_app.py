@@ -1,6 +1,7 @@
-from mockito import mock
+from unittest.mock import patch
+
+from mockito import mock, when
 from pytest import fixture
-from pytest import raises
 
 from src.app import Application
 from src.view.view import SessionProcessorView
@@ -9,12 +10,16 @@ from src.view.view import SessionProcessorView
 class TestApplication:
     @fixture
     def view(self) -> SessionProcessorView:
-        return mock()
+        view = mock(SessionProcessorView)
+        when(view).process('input', 'output')
+        return view
 
     @fixture
     def app(self, view: SessionProcessorView) -> Application:
         return Application(view=view)
 
-    def test_raises_on_run(self, app: Application) -> None:
-        with raises(NotImplementedError):
-            app.run()
+    @patch('sys.argv', ['_', 'input', 'output'])
+    def test_raises_on_run(
+            self, app: Application, view: SessionProcessorView,
+    ) -> None:
+        app.run()

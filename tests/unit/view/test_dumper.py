@@ -55,7 +55,7 @@ class TestPSVDumper:
     @fixture
     def path(self) -> str:
         dirname = os.path.dirname(__file__)
-        path = os.path.join(dirname, 'output.psv')
+        path = os.path.join(dirname, 'output_example.psv')
         yield path
         os.remove(path)
 

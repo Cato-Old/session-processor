@@ -44,7 +44,7 @@ class TestSessionProcessorView:
 
     @fixture
     def output_path(self) -> str:
-        return 'output.psv'
+        return 'output_example.psv'
 
     @fixture
     def dumper(self, sessions: SessionGenerator, output_path: str) -> Dumper:
