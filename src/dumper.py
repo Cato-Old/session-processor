@@ -1,9 +1,15 @@
 from abc import ABC
+from abc import abstractmethod
+
+from src.domain import SessionGenerator
 
 
 class Dumper(ABC):
-    pass
+    @abstractmethod
+    def dump(self, sessions: SessionGenerator) -> None:
+        raise NotImplementedError
 
 
 class PSVDumper(Dumper):
-    pass
+    def dump(self, sessions: SessionGenerator) -> None:
+        raise NotImplementedError
