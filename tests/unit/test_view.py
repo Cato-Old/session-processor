@@ -1,15 +1,15 @@
 from factory.fuzzy import FuzzyText
 from mockito import mock, when, verify
 from pytest import fixture
-from pytest import raises
 
 from src.controller.controller import SessionProcessorController
 from src.domain import SessionGenerator
 from src.domain import StatementGenerator
+from src.dumper import Dumper
 from src.loader import Loader, PSVLoader
 from src.view import SessionProcessorView
-from tests.unit.controller.test_creator import SessionFactory
 
+from tests.unit.controller.test_creator import SessionFactory
 from tests.unit.test_loader import StatementFactory
 
 
@@ -43,19 +43,36 @@ class TestSessionProcessorView:
         return controller
 
     @fixture
-    def view(
-            self, loader: Loader, controller: SessionProcessorController,
-    ) -> SessionProcessorView:
-        return SessionProcessorView(loader=loader, controller=controller)
+    def output_path(self) -> str:
+        return 'output.psv'
 
-    def test_raises_on_process(
+    @fixture
+    def dumper(self, sessions: SessionGenerator, output_path: str) -> Dumper:
+        dumper = mock(Dumper)
+        when(dumper).dump(sessions, output_path)
+        return dumper
+
+    @fixture
+    def view(
+            self,
+            loader: Loader,
+            controller: SessionProcessorController,
+            dumper: Dumper
+    ) -> SessionProcessorView:
+        return SessionProcessorView(
+            loader=loader, controller=controller, dumper=dumper,
+        )
+
+    def test_processes_statements(
             self,
             view: SessionProcessorView,
             path: str,
+            output_path: str,
             loader: Loader,
             controller: SessionProcessorController,
+            dumper: Dumper,
     ) -> None:
-        with raises(NotImplementedError):
-            view.process(path)
+        view.process(path, output_path)
         verify(loader).load(...)
         verify(controller).process(...)
+        verify(dumper).dump(...)
