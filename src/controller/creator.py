@@ -40,4 +40,4 @@ class SessionCreator:
 
     @staticmethod
     def _calculate_duration(end_time: datetime, start: Statement) -> timedelta:
-        return end_time - start.start_time
+        return end_time - start.start_time + timedelta(seconds=1)
