@@ -1,2 +1,5 @@
 /venv
 /.idea
+/session_processor.egg-info
+
+*.pyc
