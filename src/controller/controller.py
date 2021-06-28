@@ -1,10 +1,10 @@
 from typing import Generator
 
-from src.creator import SessionCreator
+from src.controller.creator import SessionCreator
 from src.domain import Session
 from src.domain import StatementGenerator
-from src.grouper import StatementGrouper
-from src.sorter import StatementSorter
+from src.controller.grouper import StatementGrouper
+from src.controller.sorter import StatementSorter
 
 
 class SessionProcessorController:

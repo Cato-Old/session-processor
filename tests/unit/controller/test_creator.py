@@ -7,7 +7,7 @@ from factory.fuzzy import FuzzyNaiveDateTime
 from factory.fuzzy import FuzzyText
 from pytest import fixture
 
-from src.creator import SessionCreator
+from src.controller.creator import SessionCreator
 from src.domain import Session
 from src.domain import StatementsByHomeNo
 

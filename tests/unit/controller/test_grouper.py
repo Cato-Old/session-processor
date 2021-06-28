@@ -6,7 +6,7 @@ from pytest import fixture
 from src.domain import Statement
 from src.domain import StatementGenerator
 from src.domain import StatementsByHomeNo
-from src.grouper import StatementGrouper
+from src.controller.grouper import StatementGrouper
 
 from tests.unit.test_loader import StatementFactory
 

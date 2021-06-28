@@ -6,14 +6,14 @@ from mockito import when
 from pytest import fixture
 
 from src.controller import SessionProcessorController
-from src.creator import SessionCreator
+from src.controller.creator import SessionCreator
 from src.domain import Session
 from src.domain import StatementGenerator
 from src.domain import StatementsByHomeNo
-from src.grouper import StatementGrouper
-from src.sorter import StatementSorter
+from src.controller.grouper import StatementGrouper
+from src.controller.sorter import StatementSorter
 
-from tests.unit.test_creator import SessionFactory
+from tests.unit.controller.test_creator import SessionFactory
 from tests.unit.test_loader import StatementFactory
 
 

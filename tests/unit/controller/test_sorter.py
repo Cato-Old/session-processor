@@ -2,7 +2,7 @@ from factory.fuzzy import FuzzyInteger
 from pytest import fixture
 
 from src.domain import StatementsByHomeNo
-from src.sorter import StatementSorter
+from src.controller.sorter import StatementSorter
 from tests.unit.test_loader import StatementFactory
 
 
