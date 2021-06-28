@@ -22,7 +22,9 @@ class TestApp:
 
     @fixture
     def output_data(self, project_path: str) -> str:
-        return join(project_path, 'tests', 'data', 'output.psv')
+        output = join(project_path, 'tests', 'data', 'output.psv')
+        yield output
+        os.remove(output)
 
     @fixture
     def output_example(self, project_path: str) -> str:
