@@ -4,6 +4,7 @@ from pytest import fixture
 from pytest import raises
 
 from src.controller.controller import SessionProcessorController
+from src.domain import StatementGenerator
 from src.loader import Loader, PSVLoader
 from src.view import SessionProcessorView
 
@@ -16,10 +17,13 @@ class TestSessionProcessorView:
         return FuzzyText().fuzz()
 
     @fixture
-    def loader(self, path: str) -> Loader:
-        statements = StatementFactory.build_batch(10)
+    def statements(self) -> StatementGenerator:
+        return (s for s in StatementFactory.build_batch(10))
+
+    @fixture
+    def loader(self, path: str, statements: StatementGenerator) -> Loader:
         loader = mock(PSVLoader)
-        when(loader).load(path).thenReturn(s for s in statements)
+        when(loader).load(path).thenReturn(statements)
         return loader
 
     @fixture
