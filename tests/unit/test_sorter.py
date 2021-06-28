@@ -25,7 +25,7 @@ class TestStatementSorter:
             grouped[key].sort(key=lambda s: s.start_time)
         return grouped
 
-    def test_raise_on_sort_method(
+    def test_sorts_statements_by_start_time(
             self,
             sorter: StatementSorter,
             grouped: StatementsByHomeNo,

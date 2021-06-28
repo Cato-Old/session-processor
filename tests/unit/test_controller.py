@@ -87,7 +87,7 @@ class TestSessionProcessorController:
             grouper=grouper, sorter=sorter, creator=creator,
         )
 
-    def test_raises_on_process(
+    def test_processes_statements_to_sessions(
             self,
             controller: SessionProcessorController,
             grouper: StatementGrouper,

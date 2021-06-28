@@ -70,7 +70,7 @@ class TestSessionCreator:
                 sessions.append(session)
         return sessions
 
-    def test_raise_on_creation(
+    def test_creates_sessions(
             self,
             creator: SessionCreator,
             sorted_statements: StatementsByHomeNo,

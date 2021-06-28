@@ -35,7 +35,7 @@ class TestStatementGrouper:
     def grouper(self) -> StatementGrouper:
         return StatementGrouper()
 
-    def test_raises_on_group(
+    def test_groups_statements_by_home_no(
             self,
             grouper: StatementGrouper,
             statements: StatementGenerator,
