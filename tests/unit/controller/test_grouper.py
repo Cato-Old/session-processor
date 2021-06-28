@@ -8,7 +8,7 @@ from src.domain import StatementGenerator
 from src.domain import StatementsByHomeNo
 from src.controller.grouper import StatementGrouper
 
-from tests.unit.test_loader import StatementFactory
+from tests.unit.view.test_loader import StatementFactory
 
 
 class TestStatementGrouper:

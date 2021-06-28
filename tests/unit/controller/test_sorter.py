@@ -3,7 +3,7 @@ from pytest import fixture
 
 from src.domain import StatementsByHomeNo
 from src.controller.sorter import StatementSorter
-from tests.unit.test_loader import StatementFactory
+from tests.unit.view.test_loader import StatementFactory
 
 
 class TestStatementSorter:

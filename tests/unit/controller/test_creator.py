@@ -11,7 +11,7 @@ from src.controller.creator import SessionCreator
 from src.domain import Session
 from src.domain import StatementsByHomeNo
 
-from tests.unit.test_loader import StatementFactory
+from tests.unit.view.test_loader import StatementFactory
 
 
 class SessionFactory(Factory):

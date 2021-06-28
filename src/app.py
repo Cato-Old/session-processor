@@ -1,4 +1,4 @@
-from src.view import SessionProcessorView
+from src.view.view import SessionProcessorView
 
 
 class Application:

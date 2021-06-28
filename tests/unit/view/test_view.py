@@ -5,12 +5,12 @@ from pytest import fixture
 from src.controller.controller import SessionProcessorController
 from src.domain import SessionGenerator
 from src.domain import StatementGenerator
-from src.dumper import Dumper
-from src.loader import Loader, PSVLoader
-from src.view import SessionProcessorView
+from src.view.dumper import Dumper
+from src.view.loader import Loader, PSVLoader
+from src.view.view import SessionProcessorView
 
 from tests.unit.controller.test_creator import SessionFactory
-from tests.unit.test_loader import StatementFactory
+from tests.unit.view.test_loader import StatementFactory
 
 
 class TestSessionProcessorView:

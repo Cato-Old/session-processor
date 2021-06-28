@@ -7,7 +7,7 @@ from typing import List
 from pytest import fixture
 
 from src.domain import SessionGenerator, Session
-from src.dumper import PSVDumper
+from src.view.dumper import PSVDumper
 
 from tests.unit.controller.test_creator import SessionFactory
 

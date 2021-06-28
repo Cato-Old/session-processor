@@ -12,7 +12,7 @@ from factory.fuzzy import FuzzyText
 from pytest import fixture
 
 from src.domain import Statement
-from src.loader import PSVLoader, SplitDate
+from src.view.loader import PSVLoader, SplitDate
 
 InputValue = Tuple[int, int, int, str]
 
