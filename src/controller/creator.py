@@ -3,7 +3,7 @@ from datetime import time
 from datetime import timedelta
 from typing import Generator
 
-from src.domain import StatementsByHomeNo
+from src.domain import StatementsByHomeNo, SessionGenerator
 from src.domain import Session
 
 
@@ -12,7 +12,7 @@ class SessionCreator:
 
     def create(
             self, sorted_statements: StatementsByHomeNo,
-    ) -> Generator[Session, None, None]:
+    ) -> SessionGenerator:
         for _, statements in sorted_statements.items():
             shifted = [*statements[1:], None]
             for start, end in zip(statements, shifted):

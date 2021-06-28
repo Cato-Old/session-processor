@@ -5,7 +5,7 @@ from mockito import mock
 from mockito import when
 from pytest import fixture
 
-from src.controller import SessionProcessorController
+from src.controller.controller import SessionProcessorController
 from src.controller.creator import SessionCreator
 from src.domain import Session
 from src.domain import StatementGenerator
