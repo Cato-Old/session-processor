@@ -1,14 +1,9 @@
-from typing import Dict
-from typing import List
-
-from src.domain import Statement
+from src.domain import StatementsByHomeNo
 
 
 class StatementSorter:
     @staticmethod
-    def sort(
-            grouped_statement: Dict[int, List[Statement]],
-    ) -> Dict[int, List[Statement]]:
+    def sort(grouped_statement: StatementsByHomeNo) -> StatementsByHomeNo:
         for key in grouped_statement:
             grouped_statement[key].sort(key=lambda s: s.start_time)
         return grouped_statement

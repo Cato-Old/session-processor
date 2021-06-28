@@ -1,15 +1,10 @@
-from typing import Dict
-from typing import Generator
-from typing import List
-
-from src.domain import Statement
+from src.domain import StatementGenerator
+from src.domain import StatementsByHomeNo
 
 
 class StatementGrouper:
     @staticmethod
-    def group(
-            statements: Generator[Statement, None, None],
-    ) -> Dict[int, List[Statement]]:
+    def group(statements: StatementGenerator) -> StatementsByHomeNo:
         grouped = {}
         for statement in statements:
             try:

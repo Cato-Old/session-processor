@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, List
+from typing import List
 
 from factory import Factory, LazyAttribute
 from factory.fuzzy import FuzzyInteger
@@ -9,7 +9,8 @@ from pytest import fixture
 
 from src.creator import SessionCreator
 from src.domain import Session
-from src.domain import Statement
+from src.domain import StatementsByHomeNo
+
 from tests.unit.test_loader import StatementFactory
 
 
@@ -31,7 +32,7 @@ class TestSessionCreator:
         return SessionCreator()
 
     @fixture
-    def sorted_statements(self) -> Dict[int, List[Statement]]:
+    def sorted_statements(self) -> StatementsByHomeNo:
         home_numbers = (FuzzyInteger(0).fuzz() for _ in range(10))
         statements = {
             no: StatementFactory.build_batch(3, home_no=no)
@@ -42,9 +43,7 @@ class TestSessionCreator:
         return statements
 
     @fixture
-    def expected(
-            self, sorted_statements: Dict[int, List[Statement]],
-    ) -> List[Session]:
+    def expected(self, sorted_statements: StatementsByHomeNo) -> List[Session]:
         sessions = []
         for _, statements in sorted_statements.items():
             for start, end in zip(statements, [*statements[1:], None]):
@@ -74,7 +73,7 @@ class TestSessionCreator:
     def test_raise_on_creation(
             self,
             creator: SessionCreator,
-            sorted_statements: Dict[int, List[Statement]],
+            sorted_statements: StatementsByHomeNo,
             expected: List[Session],
     ) -> None:
         actual = creator.create(sorted_statements)

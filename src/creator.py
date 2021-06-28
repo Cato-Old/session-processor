@@ -1,9 +1,9 @@
-from datetime import time, timedelta, datetime
-from typing import Dict
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 from typing import Generator
-from typing import List
 
-from src.domain import Statement
+from src.domain import StatementsByHomeNo
 from src.domain import Session
 
 
@@ -11,7 +11,7 @@ class SessionCreator:
     END_OF_DAY = time(hour=23, minute=59, second=59)
 
     def create(
-            self, sorted_statements: Dict[int, List[Statement]],
+            self, sorted_statements: StatementsByHomeNo,
     ) -> Generator[Session, None, None]:
         for _, statements in sorted_statements.items():
             shifted = [*statements[1:], None]

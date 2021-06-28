@@ -1,11 +1,11 @@
 from collections import defaultdict
-from collections.abc import Generator
-from typing import Dict
 from typing import List
 
 from pytest import fixture
 
 from src.domain import Statement
+from src.domain import StatementGenerator
+from src.domain import StatementsByHomeNo
 from src.grouper import StatementGrouper
 
 from tests.unit.test_loader import StatementFactory
@@ -19,13 +19,13 @@ class TestStatementGrouper:
     @fixture
     def statements(
             self, statement_values: List[Statement],
-    ) -> Generator[Statement, None, None]:
+    ) -> StatementGenerator:
         return (s for s in statement_values)
 
     @fixture
     def expected(
             self, statement_values: List[Statement],
-    ) -> Dict[str, List[Statement]]:
+    ) -> StatementsByHomeNo:
         grouped = defaultdict(lambda: [])
         for statement in statement_values:
             grouped[statement.home_no].append(statement)
@@ -38,8 +38,8 @@ class TestStatementGrouper:
     def test_raises_on_group(
             self,
             grouper: StatementGrouper,
-            statements: Generator[Statement, None, None],
-            expected: Dict[str, List[Statement]],
+            statements: StatementGenerator,
+            expected: StatementsByHomeNo,
     ) -> None:
         actual = grouper.group(statements)
         assert actual == expected
