@@ -2,7 +2,7 @@ from distutils.core import setup
 
 
 setup(
-    name='foo',
+    name='session-processor',
     version='1.0',
     py_modules=['src'],
 )
