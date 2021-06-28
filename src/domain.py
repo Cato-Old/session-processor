@@ -25,3 +25,6 @@ class Session:
     activity: str
     end_time: datetime
     duration: timedelta
+
+
+SessionGenerator = Generator[Session, None, None]

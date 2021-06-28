@@ -1,12 +1,11 @@
-from typing import Generator
-
 from factory.fuzzy import FuzzyText
 from mockito import mock, when, verify
 from pytest import fixture
 from pytest import raises
 
 from src.controller.controller import SessionProcessorController
-from src.domain import StatementGenerator, Session
+from src.domain import SessionGenerator
+from src.domain import StatementGenerator
 from src.loader import Loader, PSVLoader
 from src.view import SessionProcessorView
 from tests.unit.controller.test_creator import SessionFactory
@@ -30,14 +29,14 @@ class TestSessionProcessorView:
         return loader
 
     @fixture
-    def sessions(self) -> Generator[Session, None, None]:
+    def sessions(self) -> SessionGenerator:
         return (s for s in SessionFactory.build_batch(10))
 
     @fixture
     def controller(
             self,
             statements: StatementGenerator,
-            sessions: Generator[Session, None, None],
+            sessions: SessionGenerator,
     ) -> SessionProcessorController:
         controller = mock(SessionProcessorController)
         when(controller).process(statements).thenReturn(sessions)
