@@ -7,7 +7,9 @@ class SessionProcessorView:
             self, loader: Loader, controller: SessionProcessorController,
     ) -> None:
         self._loader = loader
+        self._controller = controller
 
     def process(self, path: str) -> None:
-        self._loader.load(path)
+        statements = self._loader.load(path)
+        self._controller.process(statements)
         raise NotImplementedError
