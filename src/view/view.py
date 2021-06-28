@@ -1,6 +1,6 @@
 from src.controller.controller import SessionProcessorController
-from src.dumper import Dumper
-from src.loader import Loader
+from src.view.dumper import Dumper
+from src.view.loader import Loader
 
 
 class SessionProcessorView:

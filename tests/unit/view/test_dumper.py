@@ -7,7 +7,7 @@ from typing import List
 from pytest import fixture
 
 from src.domain import SessionGenerator, Session
-from src.dumper import PSVDumper
+from src.view.dumper import PSVDumper
 
 from tests.unit.controller.test_creator import SessionFactory
 
@@ -42,7 +42,7 @@ class TestPSVDumper:
                 'Starttime': session.start_time.strftime('%Y%m%d%H%M%S'),
                 'Activity': session.activity,
                 'Endtime': session.end_time.strftime('%Y%m%d%H%M%S'),
-                'Duration': session.duration.total_seconds(),
+                'Duration': int(session.duration.total_seconds()),
             } for session in session_values
         ]
         with NamedTemporaryFile(mode='w', newline='', delete=False) as ntf:

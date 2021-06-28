@@ -3,7 +3,7 @@ from pytest import fixture
 from pytest import raises
 
 from src.app import Application
-from src.view import SessionProcessorView
+from src.view.view import SessionProcessorView
 
 
 class TestApplication:
