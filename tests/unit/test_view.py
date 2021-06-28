@@ -3,6 +3,7 @@ from mockito import mock, when, verify
 from pytest import fixture
 from pytest import raises
 
+from src.controller.controller import SessionProcessorController
 from src.loader import Loader, PSVLoader
 from src.view import SessionProcessorView
 
@@ -22,8 +23,14 @@ class TestSessionProcessorView:
         return loader
 
     @fixture
-    def view(self, loader: Loader) -> SessionProcessorView:
-        return SessionProcessorView(loader=loader)
+    def controller(self) -> SessionProcessorController:
+        return mock(SessionProcessorController)
+
+    @fixture
+    def view(
+            self, loader: Loader, controller: SessionProcessorController,
+    ) -> SessionProcessorView:
+        return SessionProcessorView(loader=loader, controller=controller)
 
     def test_raises_on_process(
             self, view: SessionProcessorView, path: str, loader: Loader,
